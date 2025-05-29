@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLANTÃO WR</title>
     <link rel="stylesheet" href="style.css">
-
     <link rel="icon" href="logo-wr fav.ico" type="image/x-icon"> 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
@@ -23,7 +20,6 @@
             <p>Data/Hora Atuais: <span id="current-datetime">Carregando...</span></p>
         </div>
     </header>
-
     <main>
         <div id="area-entrada-dados"> 
             <section id="selecao-inicial">
@@ -41,7 +37,6 @@
                     </select>
                 </div>
             </section>
-
             <section id="checklist-condominio">
                 <div id="condominio-link-wrapper" class="hidden"> 
                 </div>
@@ -51,13 +46,11 @@
                 </div>
             </section>
         </div>
-
         <div id="area-revisao" class="hidden"> 
             <h2>Revisão dos Registros</h2>
             <div id="registros-para-revisao-container">
             </div>
         </div>
-
         <div class="botoes-acao">
             <button id="btn-acao-principal">Adicionar à Revisão</button> 
             <button id="btn-revisar-registros">Revisar Registros</button>
@@ -65,7 +58,6 @@
             <button id="btn-exportar-pdf" disabled>Exportar Relatório PDF</button> 
         </div>
     </main>
-
     <footer>
         <p>&copy; <span id="current-year"></span> PLANTÃO WR</p>
     </footer>
