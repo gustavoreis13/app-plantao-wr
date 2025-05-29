@@ -1,0 +1,309 @@
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    background-color: #040330; 
+    color: #f0f0f0;        
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #040330; 
+    color: #fff;
+    padding: 10px 20px; 
+    text-align: center; 
+}
+
+.header-content { 
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    gap: 15px; 
+    margin-bottom: 5px; 
+}
+
+#header-logo {
+    height: 40px; 
+    width: auto;  
+}
+
+header h1 {
+    margin: 0; 
+    font-size: 1.8em;
+}
+
+#current-datetime-container {
+    font-size: 0.9em;
+}
+
+main {
+    flex-grow: 1;
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;  
+    color: #333;            
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1); 
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+h2 { 
+    color: #040330;            
+    border-bottom: 2px solid #040330; 
+    padding-bottom: 5px;
+    margin-top: 0;
+}
+
+label { 
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333; 
+}
+
+select,
+button { /* Estilo base para select e button */
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em; 
+}
+
+.botoes-acao {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 10px;
+}
+
+.botoes-acao button { /* Botões principais de ação */
+    flex: 1 1 auto; 
+    min-width: 180px; 
+    margin-bottom: 5px; 
+}
+
+#btn-acao-principal { 
+    background-color: #5cb85c; 
+    color: white;
+    cursor: pointer;
+    border-color: #4cae4c; 
+}
+#btn-acao-principal:hover {
+    background-color: #4cae4c;
+}
+
+#btn-revisar-registros {
+    background-color: #ffc107; 
+    color: #212529; 
+    cursor: pointer;
+    border-color: #e0a800;
+}
+#btn-revisar-registros:hover {
+    background-color: #e0a800;
+}
+
+#btn-finalizar-exportar-json { 
+    background-color: #007bff; 
+    color: white;
+    cursor: pointer;
+    border-color: #0056b3;
+}
+#btn-finalizar-exportar-json:hover {
+    background-color: #0056b3;
+}
+#btn-finalizar-exportar-json:disabled {
+    background-color: #6c757d; 
+    border-color: #5a6268;
+    cursor: not-allowed;
+}
+
+#btn-exportar-pdf { 
+    background-color: #dc3545; 
+    color: white;
+    cursor: pointer;
+    border-color: #c82333;
+}
+#btn-exportar-pdf:hover {
+    background-color: #c82333;
+}
+#btn-exportar-pdf:disabled {
+    background-color: #6c757d;
+    border-color: #5a6268;
+    cursor: not-allowed;
+}
+
+#itens-checklist-container {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px dashed #ccc; 
+    min-height: 50px;
+    border-radius: 4px;
+}
+
+.checklist-item {
+    background-color: #f9f9f9; 
+    border: 1px solid #eee;  
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.checklist-item label { 
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    color: #333; 
+}
+
+.checklist-item input[type="number"],
+.checklist-item textarea {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd; 
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #333; 
+    background-color: #fff; 
+}
+
+.checklist-item input[type="number"] {
+    width: 120px;
+    margin-right: 10px;
+}
+
+.checklist-item textarea {
+    width: 100%;
+    min-height: 60px;
+    margin-top: 5px;
+}
+
+.input-error {
+    border-color: red !important;
+    background-color: #ffe6e6;
+}
+
+/* Estilos para a lista de acessos do condomínio */
+#condominio-link-wrapper {
+    background-color: #f0f8ff; /* Azul claro AliceBlue, por exemplo */
+    padding: 10px;
+    margin-bottom: 15px; 
+    border-radius: 4px;
+    border: 1px solid #cce5ff; /* Borda azul clara */
+}
+
+.access-list-container .access-item {
+    margin: 5px 0;
+    padding: 5px;
+    border-bottom: 1px dotted #ddd; /* Separador suave */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Alinha descrição à esquerda, botão à direita */
+    flex-wrap: wrap; /* Permite quebrar linha se necessário */
+}
+.access-list-container .access-item:last-child {
+    border-bottom: none;
+}
+
+.access-item .access-description {
+    font-weight: bold;
+    margin-right: 10px;
+}
+.access-item .access-value,
+.access-item a {
+    color: #007bff;
+    word-break: break-all; /* Quebra URLs longas */
+}
+.access-item a:hover {
+    text-decoration: underline;
+}
+.access-item span.copyable-text { /* Para texto copiável */
+    background-color: #e9ecef;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-right: 5px;
+    font-family: monospace; /* Para endereços e IDs */
+}
+
+button.btn-copiar-info { /* Estilo para o botão de cópia menor */
+    width: auto; 
+    padding: 3px 8px;
+    font-size: 0.8em;
+    margin-left: 8px;
+    background-color: #6c757d; 
+    color: white;
+    border-color: #5a6268;
+    vertical-align: middle; 
+    line-height: normal; /* Ajuste para o botão não ficar muito alto */
+    flex-shrink: 0; /* Impede que o botão encolha demais */
+}
+button.btn-copiar-info:hover {
+    background-color: #5a6268;
+}
+
+
+#area-revisao {
+    margin-top: 20px;
+}
+/* ... (restante dos estilos para #area-revisao, .registro-revisao-item, etc. como antes) ... */
+.registro-revisao-item {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+.registro-revisao-item h3 {
+    margin-top: 0;
+    color: #040330; 
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+.registro-revisao-item p {
+    margin: 5px 0;
+}
+.registro-revisao-item .checklist-item-revisao {
+    margin-left: 20px;
+    padding: 5px;
+    border-left: 3px solid #040330; 
+    margin-bottom: 5px;
+}
+.registro-revisao-item .checklist-item-revisao strong {
+     display: inline-block;
+     min-width: 100px; 
+}
+.registro-revisao-item button.btn-editar-registro {
+    background-color: #ffc107; 
+    color: #212529;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    width: auto; 
+    margin-top: 10px;
+    border-color: #e0a800;
+}
+.registro-revisao-item button.btn-editar-registro:hover {
+    background-color: #e0a800;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+footer {
+    background-color: #040330; 
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    margin-top: auto;
+}
