@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLANTÃO WR</title>
     <link rel="stylesheet" href="style.css">
+
     <link rel="icon" href="logo-wr fav.ico" type="image/x-icon"> 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
     <header>
         <div class="header-content"> 
+            {/* */}
             <img src="logoWR.png" alt="Logo WR" id="header-logo"> 
             <h1>PLANTÃO WR</h1>
         </div>
@@ -32,7 +36,7 @@
                 </div>
                 <div>
                     <label for="condominio">Condomínio:</label>
-                    <select id="condominio" name="condominio">
+                    <select id="condominio" name="condominio" disabled>
                         <option value="">Selecione o condomínio</option>
                     </select>
                 </div>
@@ -40,11 +44,10 @@
 
             <section id="checklist-condominio">
                 <div id="condominio-link-wrapper" class="hidden"> 
-                    {/* Os links/informações de acesso serão injetados aqui */}
                 </div>
                 <h2>Checklist do Condomínio</h2>
                 <div id="itens-checklist-container">
-                    <p>Selecione um condomínio para ver o checklist.</p>
+                    <p>Selecione um plantonista e um condomínio para ver o checklist.</p>
                 </div>
             </section>
         </div>
@@ -52,7 +55,6 @@
         <div id="area-revisao" class="hidden"> 
             <h2>Revisão dos Registros</h2>
             <div id="registros-para-revisao-container">
-                {/* Conteúdo da revisão será gerado aqui */}
             </div>
         </div>
 
@@ -67,6 +69,9 @@
     <footer>
         <p>&copy; <span id="current-year"></span> PLANTÃO WR</p>
     </footer>
+    <div id="notification-toast" class="toast hidden">
+        <span id="toast-message"></span>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -94,7 +94,7 @@ button { /* Estilo base para select e button */
 }
 
 #btn-acao-principal { 
-    background-color: #5cb85c; 
+    background-color: #5cb85c; /* Verde */
     color: white;
     cursor: pointer;
     border-color: #4cae4c; 
@@ -104,7 +104,7 @@ button { /* Estilo base para select e button */
 }
 
 #btn-revisar-registros {
-    background-color: #ffc107; 
+    background-color: #ffc107; /* Amarelo */
     color: #212529; 
     cursor: pointer;
     border-color: #e0a800;
@@ -114,7 +114,7 @@ button { /* Estilo base para select e button */
 }
 
 #btn-finalizar-exportar-json { 
-    background-color: #007bff; 
+    background-color: #007bff; /* Azul */
     color: white;
     cursor: pointer;
     border-color: #0056b3;
@@ -129,7 +129,7 @@ button { /* Estilo base para select e button */
 }
 
 #btn-exportar-pdf { 
-    background-color: #dc3545; 
+    background-color: #dc3545; /* Vermelho */
     color: white;
     cursor: pointer;
     border-color: #c82333;
@@ -193,69 +193,68 @@ button { /* Estilo base para select e button */
     background-color: #ffe6e6;
 }
 
-/* Estilos para a lista de acessos do condomínio */
 #condominio-link-wrapper {
-    background-color: #f0f8ff; /* Azul claro AliceBlue, por exemplo */
-    padding: 10px;
+    background-color: #e9ecef;
+    padding: 10px 15px;
     margin-bottom: 15px; 
     border-radius: 4px;
-    border: 1px solid #cce5ff; /* Borda azul clara */
+    /* text-align: center;  Removido para melhor layout com múltiplos acessos */
 }
 
-.access-list-container .access-item {
+#condominio-link-wrapper .access-list-container .access-item { /* Ajustado para ser mais específico */
     margin: 5px 0;
-    padding: 5px;
-    border-bottom: 1px dotted #ddd; /* Separador suave */
-    display: flex;
+    padding: 5px 0; /* Removido padding lateral, o wrapper já tem */
+    border-bottom: 1px dotted #ddd; 
+    display: flex; 
     align-items: center;
-    justify-content: space-between; /* Alinha descrição à esquerda, botão à direita */
-    flex-wrap: wrap; /* Permite quebrar linha se necessário */
+    justify-content: space-between; 
+    flex-wrap: wrap; 
+    font-size: 0.95em;
 }
-.access-list-container .access-item:last-child {
+#condominio-link-wrapper .access-list-container .access-item:last-child {
     border-bottom: none;
 }
 
 .access-item .access-description {
     font-weight: bold;
-    margin-right: 10px;
+    margin-right: 5px; /* Reduzido um pouco */
 }
-.access-item .access-value,
+.access-item .copyable-text, /* Nome da classe usada no JS para texto copiável */
 .access-item a {
     color: #007bff;
-    word-break: break-all; /* Quebra URLs longas */
+    word-break: break-all; 
 }
 .access-item a:hover {
     text-decoration: underline;
 }
-.access-item span.copyable-text { /* Para texto copiável */
-    background-color: #e9ecef;
+.access-item span.copyable-text { 
+    background-color: #f8f9fa; /* Fundo um pouco diferente do wrapper */
     padding: 2px 6px;
     border-radius: 3px;
+    border: 1px solid #ced4da;
     margin-right: 5px;
-    font-family: monospace; /* Para endereços e IDs */
+    font-family: monospace; 
 }
 
-button.btn-copiar-info { /* Estilo para o botão de cópia menor */
+button.btn-copiar-info { 
     width: auto; 
-    padding: 3px 8px;
-    font-size: 0.8em;
+    padding: 3px 8px; /* Reduzido padding */
+    font-size: 0.8em; /* Reduzido tamanho da fonte */
     margin-left: 8px;
     background-color: #6c757d; 
     color: white;
     border-color: #5a6268;
     vertical-align: middle; 
-    line-height: normal; /* Ajuste para o botão não ficar muito alto */
-    flex-shrink: 0; /* Impede que o botão encolha demais */
+    line-height: normal; 
+    flex-shrink: 0; 
 }
 button.btn-copiar-info:hover {
     background-color: #5a6268;
 }
 
-
 #area-revisao {
     margin-top: 20px;
 }
-/* ... (restante dos estilos para #area-revisao, .registro-revisao-item, etc. como antes) ... */
 .registro-revisao-item {
     background-color: #f8f9fa;
     border: 1px solid #dee2e6;
@@ -295,6 +294,40 @@ button.btn-copiar-info:hover {
     background-color: #e0a800;
 }
 
+/* Estilos para Notificações Toast */
+#notification-toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    color: #fff;
+    font-size: 0.95em;
+    z-index: 1000;
+    opacity: 0; 
+    transition: opacity 0.3s ease-in-out, bottom 0.3s ease-in-out;
+    max-width: 90%; 
+    text-align: center;
+}
+
+#notification-toast:not(.hidden) { 
+    opacity: 1;
+    bottom: 30px; 
+}
+
+#notification-toast.success {
+    background-color: #28a745; 
+}
+
+#notification-toast.error {
+    background-color: #dc3545; 
+}
+
+#notification-toast.info {
+    background-color: #17a2b8; 
+}
 
 .hidden {
     display: none !important;

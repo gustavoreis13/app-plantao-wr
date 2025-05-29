@@ -2,11 +2,12 @@
 let registrosDaSessao = [];
 let editandoRegistroIndex = null;
 let revisaoIniciada = false;
+let plantonistaConfirmado = false; // NOVA FLAG
 
 // --- Lógica de Data/Hora ---
 const currentDatetimeElement = document.getElementById('current-datetime');
 let lastFetchedTime = null;
-
+// ... (funções formatDateTime, fetchTimeFromAPI, updateLiveClockDisplay - como antes) ...
 function formatDateTime(dateObj) {
     if (!dateObj || !(dateObj instanceof Date)) { return "Data inválida"; }
     const day = String(dateObj.getDate()).padStart(2, '0');
@@ -17,7 +18,6 @@ function formatDateTime(dateObj) {
     const seconds = String(dateObj.getSeconds()).padStart(2, '0');
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
-
 async function fetchTimeFromAPI() {
     try {
         const response = await fetch('http://worldtimeapi.org/api/timezone/America/Sao_Paulo');
@@ -30,7 +30,6 @@ async function fetchTimeFromAPI() {
     }
     updateLiveClockDisplay();
 }
-
 let clockInterval;
 function updateLiveClockDisplay() {
     if (clockInterval) clearInterval(clockInterval);
@@ -47,6 +46,7 @@ function updateLiveClockDisplay() {
 }
 fetchTimeFromAPI().then(() => {}); 
 setInterval(fetchTimeFromAPI, 10 * 60 * 1000); 
+
 
 // --- Dados da Aplicação ---
 const verificadores = ["Felipe", "Gustavo", "Josemar", "Rafael"];
@@ -82,16 +82,43 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnRevisarRegistros = document.getElementById('btn-revisar-registros');
     const btnFinalizarExportarJson = document.getElementById('btn-finalizar-exportar-json');
     const btnExportarPdf = document.getElementById('btn-exportar-pdf');
+    const notificationToast = document.getElementById('notification-toast');
+    const toastMessage = document.getElementById('toast-message');
 
     const areaEntradaDados = document.getElementById('area-entrada-dados');
     const areaRevisao = document.getElementById('area-revisao');
     const registrosParaRevisaoContainer = document.getElementById('registros-para-revisao-container');
 
+    // NOVA FUNÇÃO: Mostrar Notificação Toast
+    let toastTimeout;
+    function showToast(message, type = 'info', duration = 3000) {
+        if (!notificationToast || !toastMessage) return;
+        clearTimeout(toastTimeout); // Limpa timeout anterior, se houver
+
+        toastMessage.textContent = message;
+        notificationToast.className = 'toast'; // Reseta classes
+        notificationToast.classList.add(type); // Adiciona classe do tipo (success, error, info)
+        notificationToast.classList.remove('hidden');
+
+        toastTimeout = setTimeout(() => {
+            notificationToast.classList.add('hidden');
+        }, duration);
+    }
+    
     function atualizarEstadoBotoesEInterface() {
         if (!btnAcaoPrincipal || !btnRevisarRegistros || !btnFinalizarExportarJson || !btnExportarPdf || !areaEntradaDados || !areaRevisao) {
             return;
         }
         const haRegistros = registrosDaSessao.length > 0;
+
+        // Lógica de habilitação do plantonistaSelect
+        if (plantonistaSelect) {
+            plantonistaSelect.disabled = plantonistaConfirmado || editandoRegistroIndex !== null;
+        }
+        if(condominioSelect) {
+            condominioSelect.disabled = !plantonistaConfirmado || editandoRegistroIndex !== null;
+        }
+
 
         if (editandoRegistroIndex !== null) { 
             btnAcaoPrincipal.textContent = 'Salvar Alterações';
@@ -102,8 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btnExportarPdf.classList.add('hidden'); 
             areaEntradaDados.classList.remove('hidden');
             areaRevisao.classList.add('hidden');
-            if(plantonistaSelect) plantonistaSelect.disabled = true; 
-            if(condominioSelect) condominioSelect.disabled = true;
         } else if (revisaoIniciada) { 
             btnAcaoPrincipal.classList.add('hidden'); 
             btnRevisarRegistros.textContent = 'Voltar à Entrada de Dados'; 
@@ -114,9 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             btnExportarPdf.classList.remove('hidden');
             areaEntradaDados.classList.add('hidden');
             areaRevisao.classList.remove('hidden');
-            if(plantonistaSelect) plantonistaSelect.disabled = false;
-            if(condominioSelect) condominioSelect.disabled = false;
-        } else { 
+        } else { // Modo de entrada normal
             btnAcaoPrincipal.textContent = 'Adicionar à Revisão';
             btnAcaoPrincipal.classList.remove('hidden');
             btnRevisarRegistros.textContent = 'Revisar Registros';
@@ -127,8 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
             btnExportarPdf.classList.remove('hidden');
             areaEntradaDados.classList.remove('hidden');
             areaRevisao.classList.add('hidden');
-            if(plantonistaSelect) plantonistaSelect.disabled = false;
-            if(condominioSelect) condominioSelect.disabled = false;
         }
         if (btnRevisarRegistros) {
              btnRevisarRegistros.disabled = !haRegistros && editandoRegistroIndex === null;
@@ -142,11 +163,29 @@ document.addEventListener('DOMContentLoaded', () => {
             option.textContent = nomePlantonista;
             plantonistaSelect.appendChild(option);
         });
+        // NOVO: Listener para confirmação e bloqueio do plantonista
+        plantonistaSelect.addEventListener('change', function() {
+            if (this.value && !plantonistaConfirmado) {
+                const confirmado = confirm(`Você confirma que é o Plantonista: ${this.value}?`);
+                if (confirmado) {
+                    plantonistaConfirmado = true;
+                    this.disabled = true;
+                    if (condominioSelect) condominioSelect.disabled = false; // Habilita seleção de condomínio
+                    showToast(`Plantonista ${this.value} confirmado.`, 'info');
+                } else {
+                    this.value = ''; // Reseta a seleção
+                    plantonistaConfirmado = false;
+                    if (condominioSelect) condominioSelect.disabled = true;
+                }
+            }
+            atualizarEstadoBotoesEInterface(); // Atualiza estado geral
+        });
     } else {
         console.error("Elemento select 'plantonista' não encontrado no DOM.");
     }
 
     function popularCondominiosDropdown(idCondominioParaSelecionar = null) {
+        // ... (como antes) ...
         if (!condominioSelect) { return; }
         const valorSelecionadoAnteriormente = idCondominioParaSelecionar || condominioSelect.value;
         
@@ -179,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (condominioSelect) {
         popularCondominiosDropdown(); 
         condominioSelect.addEventListener('change', function() {
+            // ... (lógica de exibição de link/RDP e renderChecklist como antes) ...
             const selectedCondominioId = this.value;
             if (checklistContainer) { 
                 const errorFields = checklistContainer.querySelectorAll('.input-error');
@@ -226,10 +266,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                 copyButton.type = 'button';
                                 copyButton.addEventListener('click', () => {
                                     navigator.clipboard.writeText(acesso.valor).then(() => {
-                                        alert(`'${acesso.valor}' copiado para a área de transferência!`);
+                                        showToast(`'${acesso.valor}' copiado!`, 'success');
                                     }).catch(err => {
                                         console.error('Falha ao copiar: ', err);
-                                        alert('Falha ao copiar. Verifique as permissões ou copie manually.');
+                                        showToast('Falha ao copiar. Verifique permissões ou copie manualmente.', 'error');
                                     });
                                 });
                                 p.appendChild(copyButton);
@@ -257,6 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function renderChecklist(condominio, dadosParaPreencher = null) {
+        // ... (como antes) ...
         if (!checklistContainer) { return; }
         checklistContainer.innerHTML = '';
 
@@ -353,6 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function validarChecklistAtual() {
+        // ... (como antes) ...
         let isValid = true;
         if (!checklistContainer) { return false; }
         const itensVisiveis = checklistContainer.querySelectorAll('.checklist-item');
@@ -362,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(condoSelecionado && (!condoSelecionado.itens_checklist || condoSelecionado.itens_checklist.length === 0)){
                     return true;
                 }
-                alert("Condomínio selecionado não possui itens de checklist para validar ou ocorreu um erro na renderização.");
+                showToast("Condomínio selecionado não possui itens de checklist para validar ou ocorreu um erro na renderização.", "error");
                 return false; 
             }
             return true; 
@@ -398,7 +440,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderReviewPage() {
-        if (!registrosParaRevisaoContainer) return;
+        // ... (como antes) ...
+         if (!registrosParaRevisaoContainer) return;
         registrosParaRevisaoContainer.innerHTML = ''; 
 
         if (registrosDaSessao.length === 0) {
@@ -457,6 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function iniciarEdicaoRegistro(index) {
+        // ... (como antes, com a exibição dos links/acessos) ...
         if (index < 0 || index >= registrosDaSessao.length) return;
         
         editandoRegistroIndex = index;
@@ -508,9 +552,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         copyButton.classList.add('btn-copiar-info');
                         copyButton.addEventListener('click', () => {
                             navigator.clipboard.writeText(acesso.valor).then(() => {
-                                alert(`'${acesso.valor}' copiado!`);
+                                showToast(`'${acesso.valor}' copiado!`, 'success');
                             }).catch(err => {
-                                alert('Falha ao copiar.');
+                                showToast('Falha ao copiar.', 'error');
                             });
                         });
                         p.appendChild(copyButton);
@@ -526,26 +570,29 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarEstadoBotoesEInterface(); 
     }
     
+    // Listener do botão de Ação Principal (Adicionar/Salvar Alterações)
     if (btnAcaoPrincipal) {
         btnAcaoPrincipal.addEventListener('click', function() {
+            // Verifica se plantonista está selecionado E CONFIRMADO (exceto em modo de edição)
+            if (editandoRegistroIndex === null && (!plantonistaSelect.value || !plantonistaConfirmado)) {
+                showToast("Por favor, selecione e confirme o Plantonista.", "error");
+                if(plantonistaSelect && !plantonistaSelect.disabled) plantonistaSelect.focus();
+                return;
+            }
+            // Restante das validações e lógica como antes...
             const plantonistaSelecionado = plantonistaSelect ? plantonistaSelect.value : '';
             const condominioIdSelecionado = (editandoRegistroIndex !== null) 
                                          ? registrosDaSessao[editandoRegistroIndex].condominio_id 
                                          : (condominioSelect ? condominioSelect.value : '');
             
-            if (!plantonistaSelecionado) {
-                alert("Por favor, selecione o Plantonista.");
-                if(plantonistaSelect) plantonistaSelect.focus();
-                return;
-            }
             if (editandoRegistroIndex === null && !condominioIdSelecionado) { 
-                alert("Por favor, selecione um Condomínio.");
+                showToast("Por favor, selecione um Condomínio.", "error");
                 if(condominioSelect) condominioSelect.focus();
                 return;
             }
 
             if (!validarChecklistAtual()) {
-                alert("Preencha todos os campos obrigatórios do checklist. Observação é obrigatória se houver itens com defeito.");
+                showToast("Preencha todos os campos obrigatórios do checklist. Observação é obrigatória se houver itens com defeito.", "error");
                 return;
             }
 
@@ -553,7 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const condominioObj = condominios.find(c => c.id === condominioIdSelecionado);
 
             if (!condominioObj) { 
-                alert("Erro: Condomínio não encontrado para o ID: " + condominioIdSelecionado);
+                showToast("Erro: Condomínio não encontrado para o ID: " + condominioIdSelecionado, "error");
                 return;
             }
 
@@ -583,13 +630,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (editandoRegistroIndex !== null) { 
                 registrosDaSessao[editandoRegistroIndex] = registroProcessado;
-                alert(`Alterações no condomínio "${condominioObj.nome}" salvas com sucesso!`);
+                showToast(`Alterações em "${condominioObj.nome}" salvas!`, 'success');
                 editandoRegistroIndex = null;
                 revisaoIniciada = true; 
                 renderReviewPage(); 
             } else { 
                 registrosDaSessao.push(registroProcessado);
-                alert(`Condomínio "${condominioObj.nome}" adicionado à lista de revisão. ${registrosDaSessao.length} registro(s) na sessão.`);
+                showToast(`"${condominioObj.nome}" adicionado. ${registrosDaSessao.length} registro(s) na sessão.`, 'success');
                 popularCondominiosDropdown(); 
                 if(condominioSelect) condominioSelect.value = '';
                 renderChecklist(null);
@@ -599,17 +646,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Listener do botão Revisar Registros
     if (btnRevisarRegistros) {
         btnRevisarRegistros.addEventListener('click', function() {
-            if (editandoRegistroIndex !== null) { 
+            if (editandoRegistroIndex !== null) { // Clicou em "Cancelar Edição"
                 editandoRegistroIndex = null;   
-                revisaoIniciada = true;         
-                renderReviewPage();             
+                revisaoIniciada = true; // Volta para tela de revisão
+                renderReviewPage();          
+                showToast("Edição cancelada.", "info");
             } else { 
                 revisaoIniciada = !revisaoIniciada; 
                 if (revisaoIniciada) {
                     renderReviewPage();
-                } else { 
+                } else { // Voltando para entrada de dados
                     popularCondominiosDropdown(); 
                     if(condominioSelect) condominioSelect.value = ''; 
                     renderChecklist(null); 
@@ -620,14 +669,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Listener do botão Finalizar e Exportar JSON
     if (btnFinalizarExportarJson) {
         btnFinalizarExportarJson.addEventListener('click', function() {
             if (registrosDaSessao.length === 0) {
-                alert("Nenhuma verificação foi registrada nesta sessão para exportar.");
+                showToast("Nenhuma verificação registrada para exportar.", "error");
                 return;
             }
             if (!revisaoIniciada && editandoRegistroIndex === null) { 
-                 alert("Por favor, revise os registros antes de finalizar e exportar o JSON.");
+                 showToast("Por favor, revise os registros antes de exportar o JSON.", "info");
                  revisaoIniciada = true; 
                  renderReviewPage();
                  atualizarEstadoBotoesEInterface();
@@ -636,13 +686,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const dataHoraExportacao = lastFetchedTime ? new Date(lastFetchedTime.getTime()) : new Date();
             const timestampArquivo = dataHoraExportacao.toISOString().slice(0,19).replace(/:/g,'-').replace('T','_');
-            const plantonistaNomeParaArquivo = (plantonistaSelect.value || (registrosDaSessao.length > 0 ? registrosDaSessao[0].plantonista : 'Plantonista')).replace(/[^a-zA-Z0-9_.-]/g, '_'); 
+            const plantonistaNomeParaArquivo = (plantonistaSelect.value && plantonistaConfirmado ? plantonistaSelect.value : (registrosDaSessao.length > 0 ? registrosDaSessao[0].plantonista : 'Plantonista')).replace(/[^a-zA-Z0-9_.-]/g, '_'); 
             const nomeArquivoFinal = `plantao_WR_${plantonistaNomeParaArquivo}_${timestampArquivo}.json`;
 
             const jsonData = JSON.stringify(registrosDaSessao, null, 2);
             const blob = new Blob([jsonData], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
-
             const a = document.createElement('a');
             a.href = url;
             a.download = nomeArquivoFinal;
@@ -651,28 +700,37 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
 
-            alert(`Relatório JSON completo com ${registrosDaSessao.length} verificações foi exportado como '${nomeArquivoFinal}'!`);
+            showToast(`Relatório JSON exportado como '${nomeArquivoFinal}'!`, 'success');
 
+            // Resetar tudo
             registrosDaSessao = [];
             revisaoIniciada = false;
             editandoRegistroIndex = null;
-            if (plantonistaSelect) plantonistaSelect.value = '';
+            plantonistaConfirmado = false; // Libera o plantonista
+            if (plantonistaSelect) {
+                 plantonistaSelect.value = '';
+                 plantonistaSelect.disabled = false;
+            }
             popularCondominiosDropdown(); 
-            if (condominioSelect) condominioSelect.value = '';
+            if (condominioSelect) {
+                condominioSelect.value = '';
+                condominioSelect.disabled = true; // Desabilita até plantonista ser confirmado
+            }
             renderChecklist(null);
             if(condominioLinkWrapper) condominioLinkWrapper.classList.add('hidden');
             atualizarEstadoBotoesEInterface();
         });
     }
 
+    // Listener do botão Exportar PDF
     if (btnExportarPdf) {
         btnExportarPdf.addEventListener('click', function() {
             if (registrosDaSessao.length === 0) {
-                alert("Nenhuma verificação foi registrada nesta sessão para exportar para PDF.");
+                showToast("Nenhuma verificação registrada para exportar para PDF.", "error");
                 return;
             }
              if (!revisaoIniciada && editandoRegistroIndex === null) {
-                 alert("Por favor, revise os registros antes de exportar para PDF.");
+                 showToast("Por favor, revise os registros antes de exportar para PDF.", "info");
                  revisaoIniciada = true;
                  renderReviewPage();
                  atualizarEstadoBotoesEInterface();
@@ -681,7 +739,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const { jsPDF } = window.jspdf; 
             const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
-            doc.setFont('helvetica', 'normal');
+            
+            // Tenta carregar a imagem do logo para o PDF
+            const logoImg = document.getElementById('header-logo');
+            let logoDataUrl = null;
+            if (logoImg && logoImg.complete && logoImg.naturalHeight !== 0) { // Verifica se a imagem está carregada
+                try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = logoImg.naturalWidth;
+                    canvas.height = logoImg.naturalHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(logoImg, 0, 0);
+                    logoDataUrl = canvas.toDataURL('image/png');
+                } catch (e) {
+                    console.error("Erro ao converter logo para DataURL:", e);
+                }
+            } else {
+                console.warn("Logo não carregado ou não encontrado para o PDF.");
+            }
+
 
             let startY = 15;
             const pageHeight = doc.internal.pageSize.height;
@@ -690,10 +766,18 @@ document.addEventListener('DOMContentLoaded', () => {
             let pageNumber = 1;
 
             function addHeaderPdf() { 
+                startY = 15; // Reset startY para cada header
+                if (logoDataUrl) {
+                    // Ajustar dimensões e posição do logo conforme necessário
+                    const logoHeight = 10; // Altura do logo no PDF em mm
+                    const logoWidth = (logoImg.naturalWidth * logoHeight) / logoImg.naturalHeight;
+                    doc.addImage(logoDataUrl, 'PNG', margin, startY - 2, logoWidth, logoHeight);
+                }
                 doc.setFontSize(18);
                 doc.setTextColor(4, 3, 48); 
-                doc.text("Relatório de Plantão WR", pageWidth / 2, startY, { align: "center" });
-                startY += 8;
+                doc.text("Relatório de Plantão WR", pageWidth / 2, startY + (logoDataUrl ? 3 : 0) , { align: "center" });
+                startY += (logoDataUrl ? 8 : 8); // Ajusta o startY dependendo se o logo foi adicionado
+
                 doc.setDrawColor(4, 3, 48); 
                 doc.line(margin, startY, pageWidth - margin, startY); 
                 startY += 8;
@@ -707,7 +791,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addHeaderPdf();
             addFooterPdf();
 
-            const plantonistaNome = (plantonistaSelect && plantonistaSelect.value && editandoRegistroIndex === null) 
+            const plantonistaNome = (plantonistaSelect && plantonistaSelect.value && plantonistaConfirmado) 
                                 ? plantonistaSelect.value 
                                 : (registrosDaSessao.length > 0 ? registrosDaSessao[0].plantonista : 'N/A');
             doc.setFontSize(12);
@@ -718,16 +802,16 @@ document.addEventListener('DOMContentLoaded', () => {
             startY += 10;
 
             registrosDaSessao.forEach((registro, index) => {
-                const estimativaAlturaCabecalhoRegistro = 20; 
+                const estimativaAlturaCabecalhoRegistro = 15; 
                 const estimativaAlturaPorItemChecklist = 7; 
                 const estimativaAlturaTabela = registro.checklist_resultados.length * estimativaAlturaPorItemChecklist + 10; 
                 
                 if (startY + estimativaAlturaCabecalhoRegistro + estimativaAlturaTabela > pageHeight - 20) { 
                     doc.addPage();
                     pageNumber++;
-                    startY = 15; 
-                    addHeaderPdf();
+                    addHeaderPdf(); // Adiciona cabeçalho completo na nova página
                     addFooterPdf();
+                    // Repete informações do plantonista se desejar
                     doc.setFontSize(12);
                     doc.setTextColor(0,0,0);
                     doc.text(`Plantonista: ${plantonistaNome} (continuação)`, margin, startY);
@@ -744,9 +828,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 doc.setFont('helvetica', 'normal');
                 doc.text(`Data da Verificação: ${registro.data_hora_verificacao}`, margin, startY);
                 startY += 8;
-
-                // NÃO ADICIONAR Informações de Acesso ao PDF
-                // A seção que adicionava condominioOriginal.acessos foi removida daqui.
 
                 const head = [["Item", "Total", "Funcionando", "Defeito", "Observação"]];
                 const body = registro.checklist_resultados.map(item => [
@@ -775,13 +856,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (dataHook.pageNumber > pageNumber) {
                             pageNumber = dataHook.pageNumber;
                         }
+                        // Adiciona o rodapé em cada página que o autoTable desenha
+                        doc.setPage(dataHook.pageNumber); // Certifica que estamos na página correta
                         addFooterPdf(); 
                     }
                 });
                 startY = doc.autoTable.previous.finalY + 10; 
             });
+            // Adiciona rodapé na última página, caso o autotable não tenha criado uma nova página no final.
             if (doc.internal.getNumberOfPages() === pageNumber) {
-                doc.setPage(pageNumber); 
+                doc.setPage(pageNumber);
                 addFooterPdf();
             }
 
@@ -790,7 +874,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const nomeArquivoFinal = `${nomeArquivoBase}_${timestampArquivo}.pdf`;
             
             doc.save(nomeArquivoFinal);
-            alert(`Relatório PDF exportado como '${nomeArquivoFinal}'! (Sem informações de acesso internas)`);
+            showToast(`Relatório PDF exportado como '${nomeArquivoFinal}'!`, 'success');
         });
     }
     atualizarEstadoBotoesEInterface(); 
