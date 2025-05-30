@@ -49,7 +49,7 @@ setInterval(fetchTimeFromAPI, 10 * 60 * 1000);
 
 
 // --- Dados da Aplicação ---
-const verificadores = ["Felipe", "Gustavo", "Josemar", "Rafael"];
+const verificadores = ["Filipe", "Gustavo", "Josemar", "Rafael"];
 const condominios = [ // Certifique-se de que esta lista está completa e correta
   { id: "condo_01", nome: "PENÍNSULA", acessos: [{ descricao: "Acesso Principal", tipo: "rdp", valor: "Peninsula.Dyndns.org" }], itens_checklist: [{ id_item: "item_01_01", descricao: "CFTV", total_unidades: 94 },{ id_item: "item_01_02", descricao: "Controle de Acesso", total_unidades: 9 },{ id_item: "item_01_03", descricao: "Status Geral dos Portões", total_unidades: 1 },{ id_item: "item_01_04", descricao: "C.E", total_unidades: 6 },{ id_item: "item_01_05", descricao: "I/O", total_unidades: 3 }]},
   { id: "condo_05", nome: "BOUGAINVILLE", acessos: [{ descricao: "TeamViewer ID", tipo: "teamviewer", valor: "678956493" }], itens_checklist: [{ id_item: "item_05_01", descricao: "NVD 223", total_unidades: 5 },{ id_item: "item_05_02", descricao: "NVD 252", total_unidades: 31 },{ id_item: "item_05_03", descricao: "NVD 254", total_unidades: 30 }]},
