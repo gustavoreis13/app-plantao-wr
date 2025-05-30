@@ -6,19 +6,17 @@ let plantonistaConfirmado = false;
 
 // --- Lógica de Data/Hora ---
 const currentDatetimeElement = document.getElementById('current-datetime');
-let lastFetchedTime = null;
-
+let lastFetchedTime = null; // Usado para o relógio de display sincronizado com API
 function formatDateTime(dateObj) { 
     if (!dateObj || !(dateObj instanceof Date)) { return "Data inválida"; }
     const day = String(dateObj.getDate()).padStart(2, '0');
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); // Mês é 0-indexado
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); 
     const year = dateObj.getFullYear();
     const hours = String(dateObj.getHours()).padStart(2, '0');
     const minutes = String(dateObj.getMinutes()).padStart(2, '0');
     const seconds = String(dateObj.getSeconds()).padStart(2, '0');
     return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
-
 async function fetchTimeFromAPI() { 
     try {
         const response = await fetch('http://worldtimeapi.org/api/timezone/America/Sao_Paulo');
@@ -27,21 +25,23 @@ async function fetchTimeFromAPI() {
         lastFetchedTime = new Date(data.datetime);
     } catch (error) {
         console.error("Falha ao buscar hora da API:", error);
-        if (!lastFetchedTime) { lastFetchedTime = new Date(); } 
+        // Não definimos lastFetchedTime com new Date() aqui para que o relógio indique falha na API.
+        // A captura de data para registros usará new Date() diretamente.
     }
     updateLiveClockDisplay();
 }
-
 let clockInterval;
 function updateLiveClockDisplay() { 
     if (clockInterval) clearInterval(clockInterval);
     clockInterval = setInterval(() => {
-        const now = new Date();
+        const now = new Date(); // Hora local para o display do relógio que "anda"
         let statusMessage = "(Local)";
-        if (lastFetchedTime) {
+        if (lastFetchedTime) { // Se temos uma referência da API
             const diffSeconds = Math.abs((now.getTime() - lastFetchedTime.getTime()) / 1000);
             if (diffSeconds < (10 * 60) + 30) { statusMessage = `(Sincronizado com API)`;} 
             else { statusMessage = `(API Desatualizada - Usando Local)`;}
+        } else {
+            statusMessage = "(Local - API Indisponível)";
         }
         if (currentDatetimeElement) { currentDatetimeElement.textContent = `${formatDateTime(now)} ${statusMessage}`; }
     }, 1000);
@@ -51,7 +51,7 @@ setInterval(fetchTimeFromAPI, 10 * 60 * 1000);
 
 // --- Dados da Aplicação ---
 const verificadores = ["Filipe", "Gustavo", "Josemar", "Rafael"];
-const condominios = [ // Lista completa de condomínios com dados atualizados
+const condominios = [ /* ... (SUA LISTA COMPLETA DE CONDOMÍNIOS COMO ANTES) ... */ 
   { id: "condo_01", nome: "PENÍNSULA", acessos: [{ descricao: "Acesso Principal", tipo: "rdp", valor: "Peninsula.Dyndns.org" }], itens_checklist: [{ id_item: "item_01_01", descricao: "CFTV", total_unidades: 94 },{ id_item: "item_01_02", descricao: "CONTROLE DE ACESSO", total_unidades: 9 },{ id_item: "item_01_03", descricao: "STATUS GERAL DOS PORTÕES", total_unidades: 8 },{ id_item: "item_01_04", descricao: "CERCA ELÉTRICA", total_unidades: 6 },{ id_item: "item_01_05", descricao: "DISPOSITIVOS I/O", total_unidades: 3 }]},
   { id: "condo_02", nome: "RETIRO", acessos: [ { descricao: "DVR Portaria", tipo: "link", valor: "http://d4440c4f88cb.sn.mynetname.net:4003/doc/page/login.asp?_1748527071816" }, { descricao: "DVR Cozinha", tipo: "link", valor: "http://d4440c4f88cb.sn.mynetname.net:3703/doc/page/login.asp" }, { descricao: "DVR Avançado", tipo: "link", valor: "http://d4440c4f88cb.sn.mynetname.net:5003/doc/page/login.asp?_1748526886632" }, { descricao: "NVD Lado Esquerdo", tipo: "link", valor: "http://d4440c4f88cb.sn.mynetname.net:3401/doc/page/login.asp?_1748526934503" }, { descricao: "NVD Lado Direito", tipo: "link", valor: "http://d4440c4f88cb.sn.mynetname.net:3303/doc/page/login.asp?_1748526962748" }, { descricao: "NVD Área Central", tipo: "link", valor: "http://d4440c4f88cb.sn.mynetname.net:3203/doc/page/login.asp?_1748527000132" }, { descricao: "NVD Estradinha", tipo: "link", valor: "http://d4440c4f88cb.sn.mynetname.net:13101/" } ], itens_checklist: [{ id_item: "item_02_01", descricao: "NVR ESTRADINHA", total_unidades: 8 },{ id_item: "item_02_02", descricao: "DVR PORTARIA", total_unidades: 16 },{ id_item: "item_02_03", descricao: "DVR AVANÇADO", total_unidades: 10 },{ id_item: "item_02_04", descricao: "DVR COZINHA", total_unidades: 3 },{ id_item: "item_02_05", descricao: "NVD AREA CENTRAL", total_unidades: 14 },{ id_item: "item_02_06", descricao: "NVD LADO DIREITO", total_unidades: 16 },{ id_item: "item_02_07", descricao: "NVD LADO ESQUERDO", total_unidades: 13 },{ id_item: "item_02_12", descricao: "CANCELAS E PORTÕES", total_unidades: 4 },{ id_item: "item_02_13", descricao: "FACIAIS", total_unidades: 5 },{ id_item: "item_02_14", descricao: "CERCA ELÉTRICA", total_unidades: 6 }]},
   { id: "condo_03", nome: "MANÁCAS", acessos: [{ descricao: "AnyDesk ID", tipo: "anydesk", valor: "102374483" }], itens_checklist: [{ id_item: "item_03_01", descricao: "DVR PORTARIA P3", total_unidades: 15 },{ id_item: "item_03_02", descricao: "NVD PERÍMETRO", total_unidades: 11 },{ id_item: "item_03_03", descricao: "NVD P3+ SPEED", total_unidades: 16 },{ id_item: "item_03_04", descricao: "CONTROLE DE ACESSO", total_unidades: 7 },{ id_item: "item_03_05", descricao: "CANCELAS", total_unidades: 2 }]},
@@ -72,9 +72,10 @@ const condominios = [ // Lista completa de condomínios com dados atualizados
 
 // --- Lógica Principal da Aplicação ---
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Referências aos Elementos DOM ---
+    // ... (como antes) ...
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
-
     const plantonistaSelect = document.getElementById('plantonista');
     const condominioSelect = document.getElementById('condominio');
     const checklistContainer = document.getElementById('itens-checklist-container');
@@ -90,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const registrosParaRevisaoContainer = document.getElementById('registros-para-revisao-container');
 
     let toastTimeout;
-    function showToast(message, type = 'info', duration = 3000) { 
+    function showToast(message, type = 'info', duration = 3000) { /* ... (como antes) ... */ 
         if (!notificationToast || !toastMessage) return;
         clearTimeout(toastTimeout); 
         toastMessage.textContent = message;
@@ -102,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, duration);
     }
     
-    function atualizarEstadoBotoesEInterface() {
+    function atualizarEstadoBotoesEInterface() { /* ... (como antes) ... */ 
         if (!btnAcaoPrincipal || !btnRevisarRegistros || !btnFinalizarSessao || !btnExportarPdfHtml || !areaEntradaDados || !areaRevisao) {
             return;
         }
@@ -147,9 +148,9 @@ document.addEventListener('DOMContentLoaded', () => {
             btnAcaoPrincipal.classList.remove('hidden');
             btnRevisarRegistros.textContent = 'Revisar Registros';
             btnRevisarRegistros.classList.remove('hidden'); 
+            btnFinalizarSessao.classList.add('hidden'); 
             btnFinalizarSessao.disabled = true; 
             btnFinalizarSessao.classList.remove('finalizar-ativo'); 
-            btnFinalizarSessao.classList.remove('hidden'); 
             areaEntradaDados.classList.remove('hidden');
             areaRevisao.classList.add('hidden');
         }
@@ -158,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // ... (popularPlantonistas, popularCondominiosDropdown, listener condominioSelect, renderChecklist, validarChecklistAtual, renderReviewPage, iniciarEdicaoRegistro - como antes)
     if (plantonistaSelect) {
         verificadores.forEach(nomePlantonista => {
             const option = document.createElement('option');
@@ -387,24 +389,76 @@ document.addEventListener('DOMContentLoaded', () => {
         atualizarEstadoBotoesEInterface(); 
     }
     
+    // Listener do Botão de Ação Principal ATUALIZADO para timestamp
     if (btnAcaoPrincipal) { 
         btnAcaoPrincipal.addEventListener('click', function() {
-            if (editandoRegistroIndex === null && (!plantonistaSelect.value || !plantonistaConfirmado)) { showToast("Por favor, selecione e confirme o Plantonista.", "error"); if(plantonistaSelect && !plantonistaSelect.disabled) plantonistaSelect.focus(); return; }
-            const plantonistaSelecionado = plantonistaSelect ? plantonistaSelect.value : ''; const condominioIdSelecionado = (editandoRegistroIndex !== null) ? registrosDaSessao[editandoRegistroIndex].condominio_id : (condominioSelect ? condominioSelect.value : '');
-            if (editandoRegistroIndex === null && !condominioIdSelecionado) { showToast("Por favor, selecione um Condomínio.", "error"); if(condominioSelect) condominioSelect.focus(); return; }
-            if (!validarChecklistAtual()) { showToast("Preencha campos obrigatórios. Observação é necessária para itens com defeito.", "error"); return; }
-            const dataHoraRegistro = lastFetchedTime ? new Date(lastFetchedTime.getTime()) : new Date(); const condominioObj = condominios.find(c => c.id === condominioIdSelecionado);
-            if (!condominioObj) { showToast("Erro: Condomínio não encontrado.", "error"); return; }
-            const resultadosChecklist = []; const itensDoDOM = checklistContainer.querySelectorAll('.checklist-item');
-            itensDoDOM.forEach(itemDiv => { const itemId = itemDiv.dataset.itemId; const itemOriginal = condominioObj.itens_checklist.find(i => i.id_item === itemId); resultadosChecklist.push({ id_item_original: itemId, descricao: itemOriginal ? itemOriginal.descricao : 'N/A', total_unidades: itemOriginal ? itemOriginal.total_unidades : 0, funcionando: parseInt(itemDiv.querySelector(`input[id^="item_func_"]`).value) || 0, com_defeito: parseInt(itemDiv.querySelector(`input[id^="item_def_"]`).value) || 0, observacao: itemDiv.querySelector(`textarea[id^="item_obs_"]`).value.trim() }); });
-            const registroProcessado = { plantonista: plantonistaSelecionado, condominio_id: condominioObj.id, condominio_nome: condominioObj.nome, data_hora_verificacao: (editandoRegistroIndex !== null) ? registrosDaSessao[editandoRegistroIndex].data_hora_verificacao : formatDateTime(dataHoraRegistro), timestamp_verificacao_iso: (editandoRegistroIndex !== null) ? registrosDaSessao[editandoRegistroIndex].timestamp_verificacao_iso : dataHoraRegistro.toISOString(), checklist_resultados: resultadosChecklist };
-            if (editandoRegistroIndex !== null) { registrosDaSessao[editandoRegistroIndex] = registroProcessado; showToast(`Alterações em "${condominioObj.nome}" salvas!`, 'success'); editandoRegistroIndex = null; revisaoIniciada = true; renderReviewPage(); } 
-            else { registrosDaSessao.push(registroProcessado); showToast(`"${condominioObj.nome}" adicionado. ${registrosDaSessao.length} registro(s).`, 'success'); popularCondominiosDropdown(); if(condominioSelect) condominioSelect.value = ''; renderChecklist(null); if(condominioLinkWrapper) condominioLinkWrapper.classList.add('hidden'); }
+            if (editandoRegistroIndex === null && (!plantonistaSelect.value || !plantonistaConfirmado)) { 
+                showToast("Por favor, selecione e confirme o Plantonista.", "error"); 
+                if(plantonistaSelect && !plantonistaSelect.disabled) plantonistaSelect.focus(); 
+                return; 
+            }
+            const plantonistaSelecionado = plantonistaSelect ? plantonistaSelect.value : ''; 
+            const condominioIdSelecionado = (editandoRegistroIndex !== null) ? registrosDaSessao[editandoRegistroIndex].condominio_id : (condominioSelect ? condominioSelect.value : '');
+            
+            if (editandoRegistroIndex === null && !condominioIdSelecionado) { 
+                showToast("Por favor, selecione um Condomínio.", "error"); 
+                if(condominioSelect) condominioSelect.focus(); 
+                return; 
+            }
+            if (!validarChecklistAtual()) { 
+                showToast("Preencha campos obrigatórios. Observação é necessária para itens com defeito.", "error"); 
+                return; 
+            }
+            
+            const dataHoraRegistro = new Date(); // SEMPRE pega a hora atual para o registro/edição
+            const condominioObj = condominios.find(c => c.id === condominioIdSelecionado);
+            if (!condominioObj) { 
+                showToast("Erro: Condomínio não encontrado.", "error"); 
+                return; 
+            }
+            
+            const resultadosChecklist = []; 
+            const itensDoDOM = checklistContainer.querySelectorAll('.checklist-item');
+            itensDoDOM.forEach(itemDiv => { 
+                const itemId = itemDiv.dataset.itemId; 
+                const itemOriginal = condominioObj.itens_checklist.find(i => i.id_item === itemId); 
+                resultadosChecklist.push({ 
+                    id_item_original: itemId, 
+                    descricao: itemOriginal ? itemOriginal.descricao : 'N/A', 
+                    total_unidades: itemOriginal ? itemOriginal.total_unidades : 0, 
+                    funcionando: parseInt(itemDiv.querySelector(`input[id^="item_func_"]`).value) || 0, 
+                    com_defeito: parseInt(itemDiv.querySelector(`input[id^="item_def_"]`).value) || 0, 
+                    observacao: itemDiv.querySelector(`textarea[id^="item_obs_"]`).value.trim() 
+                }); 
+            });
+            
+            const registroProcessado = { 
+                plantonista: plantonistaSelecionado, 
+                condominio_id: condominioObj.id, 
+                condominio_nome: condominioObj.nome, 
+                data_hora_verificacao: formatDateTime(dataHoraRegistro), // Usa a dataHoraRegistro atual
+                timestamp_verificacao_iso: dataHoraRegistro.toISOString(), // Usa a dataHoraRegistro atual
+                checklist_resultados: resultadosChecklist 
+            };
+
+            if (editandoRegistroIndex !== null) { 
+                registrosDaSessao[editandoRegistroIndex] = registroProcessado; 
+                showToast(`Alterações em "${condominioObj.nome}" salvas!`, 'success'); 
+                editandoRegistroIndex = null; revisaoIniciada = true; 
+                renderReviewPage(); 
+            } else { 
+                registrosDaSessao.push(registroProcessado); 
+                showToast(`"${condominioObj.nome}" adicionado. ${registrosDaSessao.length} registro(s).`, 'success'); 
+                popularCondominiosDropdown(); 
+                if(condominioSelect) condominioSelect.value = ''; 
+                renderChecklist(null); 
+                if(condominioLinkWrapper) condominioLinkWrapper.classList.add('hidden'); 
+            }
             atualizarEstadoBotoesEInterface();
         });
     }
 
-    if (btnRevisarRegistros) { 
+    if (btnRevisarRegistros) { /* ... (como antes) ... */ 
         btnRevisarRegistros.addEventListener('click', function() {
             if (editandoRegistroIndex !== null) { editandoRegistroIndex = null; revisaoIniciada = true; renderReviewPage(); showToast("Edição cancelada.", "info"); } 
             else { revisaoIniciada = !revisaoIniciada; if (revisaoIniciada) { renderReviewPage(); } else { popularCondominiosDropdown(); if(condominioSelect) condominioSelect.value = ''; renderChecklist(null); if(condominioLinkWrapper) condominioLinkWrapper.classList.add('hidden');}}
@@ -412,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    function gerarRelatorioPDF() { 
+    function gerarRelatorioPDF() { /* ... (como antes, com PDF layout ajustado e sem logo) ... */ 
         if (registrosDaSessao.length === 0) { showToast("Nenhuma verificação registrada para gerar PDF.", "error"); return false; }
         const { jsPDF } = window.jspdf; 
         const doc = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
@@ -503,10 +557,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // --- AVISO ANTES DE SAIR DA PÁGINA SE HOUVER DADOS NÃO SALVOS ---
+    // --- AVISO ANTES DE SAIR DA PÁGINA ---
     window.addEventListener('beforeunload', function (e) {
         const plantonistaEstaPreenchidoEConfirmado = plantonistaSelect && plantonistaSelect.value !== '' && plantonistaConfirmado;
-        // Considera "em progresso" se um condomínio está selecionado para nova entrada E tem itens de checklist renderizados
         const formPossivelmentePreenchido = condominioSelect && condominioSelect.value !== '' && 
                                             editandoRegistroIndex === null && 
                                             checklistContainer && checklistContainer.querySelectorAll('.checklist-item').length > 0;
