@@ -70,7 +70,7 @@ label {
 }
 
 select,
-button { /* Estilo base para select e button */
+button { 
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -87,14 +87,14 @@ button { /* Estilo base para select e button */
     gap: 10px;
 }
 
-.botoes-acao button { /* Botões principais de ação */
+.botoes-acao button { 
     flex: 1 1 auto; 
     min-width: 180px; 
     margin-bottom: 5px; 
 }
 
 #btn-acao-principal { 
-    background-color: #5cb85c; /* Verde */
+    background-color: #5cb85c; 
     color: white;
     cursor: pointer;
     border-color: #4cae4c; 
@@ -104,7 +104,7 @@ button { /* Estilo base para select e button */
 }
 
 #btn-revisar-registros {
-    background-color: #ffc107; /* Amarelo */
+    background-color: #ffc107; 
     color: #212529; 
     cursor: pointer;
     border-color: #e0a800;
@@ -113,23 +113,43 @@ button { /* Estilo base para select e button */
     background-color: #e0a800;
 }
 
-#btn-finalizar-exportar-json { 
-    background-color: #007bff; /* Azul */
+/* Botão de Finalizar Sessão (antigo JSON) - agora o principal de exportação PDF */
+#btn-finalizar-sessao { 
+    background-color: #007bff; /* Cor base (azul) quando não especial */
     color: white;
     cursor: pointer;
     border-color: #0056b3;
 }
-#btn-finalizar-exportar-json:hover {
+#btn-finalizar-sessao:hover {
     background-color: #0056b3;
 }
-#btn-finalizar-exportar-json:disabled {
-    background-color: #6c757d; 
-    border-color: #5a6268;
-    cursor: not-allowed;
+
+/* Estilo para o botão de Finalizar quando ATIVO e pronto para exportar */
+#btn-finalizar-sessao.finalizar-ativo {
+    background-color: #28a745; /* Verde vibrante para indicar "pronto" */
+    border-color: #1e7e34;
+    color: white;
+    font-weight: bold;
+}
+#btn-finalizar-sessao.finalizar-ativo:hover {
+    background-color: #218838;
+    border-color: #19692c;
 }
 
+/* Estilo para botões desabilitados (garante que sobrescreva .finalizar-ativo) */
+#btn-finalizar-sessao:disabled,
+#btn-finalizar-sessao.finalizar-ativo:disabled, /* Para caso a classe ativa esteja presente mas o botão seja desabilitado por outra lógica */
+#btn-exportar-pdf:disabled { /* O botão PDF individual, embora escondido, pode ter estilo de desabilitado */
+    background-color: #6c757d; 
+    border-color: #5a6268;
+    color: #ccc; /* Cor do texto mais clara para desabilitado */
+    cursor: not-allowed;
+    font-weight: normal; /* Reseta o font-weight se estava ativo */
+}
+
+/* Botão Exportar PDF individual - mantido escondido pela lógica JS, mas tem estilo base */
 #btn-exportar-pdf { 
-    background-color: #dc3545; /* Vermelho */
+    background-color: #dc3545; 
     color: white;
     cursor: pointer;
     border-color: #c82333;
@@ -137,11 +157,7 @@ button { /* Estilo base para select e button */
 #btn-exportar-pdf:hover {
     background-color: #c82333;
 }
-#btn-exportar-pdf:disabled {
-    background-color: #6c757d;
-    border-color: #5a6268;
-    cursor: not-allowed;
-}
+
 
 #itens-checklist-container {
     margin-top: 15px;
@@ -198,12 +214,11 @@ button { /* Estilo base para select e button */
     padding: 10px 15px;
     margin-bottom: 15px; 
     border-radius: 4px;
-    /* text-align: center;  Removido para melhor layout com múltiplos acessos */
 }
 
-#condominio-link-wrapper .access-list-container .access-item { /* Ajustado para ser mais específico */
+#condominio-link-wrapper .access-list-container .access-item { 
     margin: 5px 0;
-    padding: 5px 0; /* Removido padding lateral, o wrapper já tem */
+    padding: 5px 0; 
     border-bottom: 1px dotted #ddd; 
     display: flex; 
     align-items: center;
@@ -217,9 +232,9 @@ button { /* Estilo base para select e button */
 
 .access-item .access-description {
     font-weight: bold;
-    margin-right: 5px; /* Reduzido um pouco */
+    margin-right: 5px; 
 }
-.access-item .copyable-text, /* Nome da classe usada no JS para texto copiável */
+.access-item .copyable-text, 
 .access-item a {
     color: #007bff;
     word-break: break-all; 
@@ -228,7 +243,7 @@ button { /* Estilo base para select e button */
     text-decoration: underline;
 }
 .access-item span.copyable-text { 
-    background-color: #f8f9fa; /* Fundo um pouco diferente do wrapper */
+    background-color: #f8f9fa; 
     padding: 2px 6px;
     border-radius: 3px;
     border: 1px solid #ced4da;
@@ -238,8 +253,8 @@ button { /* Estilo base para select e button */
 
 button.btn-copiar-info { 
     width: auto; 
-    padding: 3px 8px; /* Reduzido padding */
-    font-size: 0.8em; /* Reduzido tamanho da fonte */
+    padding: 3px 8px; 
+    font-size: 0.8em; 
     margin-left: 8px;
     background-color: #6c757d; 
     color: white;
