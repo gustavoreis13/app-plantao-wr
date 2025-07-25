@@ -92,7 +92,8 @@ const condominios = [
         { id_item: "item_04_01", descricao: "CFTV", total_unidades: 254 },
         { id_item: "item_04_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 3 }, // ATUALIZADO
         { id_item: "item_04_03", descricao: "CANCELAS", total_unidades: 3 },
-        { id_item: "item_04_04", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 8 }
+        { id_item: "item_04_04", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 8 },
+        { id_item: "item_04_05", descricao: "DVR'S BACKUP", total_unidades: 8 }
     ]},
   { 
     id: "condo_05", nome: "BOUGAINVILLE", 
@@ -175,21 +176,21 @@ const condominios = [
         { id_item: "item_14_02", descricao: "NVD 02", total_unidades: 23 },
         { id_item: "item_14_03", descricao: "NVD 03", total_unidades: 21 },
         { id_item: "item_14_04", descricao: "NVD 04", total_unidades: 14 },
-        { id_item: "item_14_05", descricao: "VÍDEO PORTEIRO", total_unidades: 3 }
+        { id_item: "item_14_05", descricao: "VÍDEO PORTEIRO", total_unidades: 4 }
     ]},
   { 
     id: "condo_15", nome: "ECO CASA BRANCA", 
     acessos: [ { descricao: "SIMNEXT NVD 1", tipo: "simnext_id", valor: "G05G2700119GN" }, { descricao: "SIMNEXT NVD 2", tipo: "simnext_id", valor: "G05I4200024DJ" }, { descricao: "SIMNEXT DVR 1", tipo: "simnext_id", valor: "8J9L0400122P5" } ], 
     itens_checklist: [
-        { id_item: "item_15_01", descricao: "NVD 01", total_unidades: 22 },
+        { id_item: "item_15_01", descricao: "NVD 01", total_unidades: 24 },
         { id_item: "item_15_02", descricao: "NVD 02", total_unidades: 24 },
-        { id_item: "item_15_03", descricao: "DVR CLUBE", total_unidades: 22 }
+        { id_item: "item_15_03", descricao: "DVR CLUBE", total_unidades: 23 }
     ]},
   { 
     id: "condo_16", nome: "QUINTAS DE CASA BRANCA", 
     acessos: [ { descricao: "AnyDesk (Alternativa)", tipo: "anydesk", valor: "1684437935" }, { descricao: "DVR 1 (Externo)", tipo: "link", valor: "wrqcb.dyndns.org:1003" },  { descricao: "DVR 1 (Interno)", tipo: "info_copiar", valor: "192.168.1.10" }, { descricao: "DVR 2 (Externo)", tipo: "link", valor: "wrqcb.dyndns.org:1103" },  { descricao: "DVR 2 (Interno)", tipo: "info_copiar", valor: "192.168.1.11" } ], 
     itens_checklist: [ 
-        { id_item: "item_16_01", descricao: "CFTV", total_unidades: 47 },
+        { id_item: "item_16_01", descricao: "CFTV", total_unidades: 48 },
         { id_item: "item_16_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 10 }, // ATUALIZADO
         { id_item: "item_16_03", descricao: "CANCELA", total_unidades: 3 },
         { id_item: "item_16_04", descricao: "VÍDEO PORTEIRO", total_unidades: 4 },
