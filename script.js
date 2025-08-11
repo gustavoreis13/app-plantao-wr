@@ -52,7 +52,7 @@ const verificadores = ["Filipe", "Gustavo", "Josemar", "Rafael", "Hiago"];
 const condominios = [ 
   { 
     id: "condo_01", nome: "PENÍNSULA", 
-    acessos: [{ descricao: "Acesso Principal", tipo: "rdp", valor: "Peninsula.Dyndns.org" }], 
+    acessos: [{ descricao: "Acesso Principal", tipo: "rdp", valor: "Peninsula.Dyndns.org" }, { descricao: "AnyDesk SRV Controle de Acesso", tipo: "anydesk", valor: "626560922"}, {descricao: "Anydesk SRV de CFTV", tipo: "anydesk", valor: "1643237138"}], 
     itens_checklist: [
         { id_item: "item_01_01", descricao: "CFTV", total_unidades: 94 },
         { id_item: "item_01_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 9 }, // ATUALIZADO
