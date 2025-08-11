@@ -180,7 +180,7 @@ const condominios = [
     ]},
   { 
     id: "condo_15", nome: "ECO CASA BRANCA", 
-    acessos: [ { descricao: "SIMNEXT NVD 1", tipo: "simnext_id", valor: "G05G2700119GN" }, { descricao: "SIMNEXT NVD 2", tipo: "simnext_id", valor: "G05I4200024DJ" }, { descricao: "SIMNEXT DVR 1", tipo: "simnext_id", valor: "8J9L0400122P5" } ], 
+    acessos: [ { descricao: "SIMNEXT NVD 1", tipo: "simnext_id", valor: "G05I4200024DJ" }, { descricao: "SIMNEXT NVD 2", tipo: "simnext_id", valor: "G05G2700119GN" }, { descricao: "SIMNEXT DVR 1", tipo: "simnext_id", valor: "8J9L0400122P5" } ], 
     itens_checklist: [
         { id_item: "item_15_01", descricao: "NVD 01", total_unidades: 24 },
         { id_item: "item_15_02", descricao: "NVD 02", total_unidades: 24 },
