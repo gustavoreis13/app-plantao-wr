@@ -47,7 +47,7 @@ fetchTimeFromAPI().then(() => {});
 setInterval(fetchTimeFromAPI, 10 * 60 * 1000); 
 
 // --- Dados da Aplicação ---
-const verificadores = ["Filipe", "Gustavo", "Josemar", "Rafael"];
+const verificadores = ["Filipe", "Gustavo", "Josemar", "Rafael", "Hiago"];
 
 const condominios = [ 
   { 
@@ -68,7 +68,7 @@ const condominios = [
         { id_item: "item_02_02", descricao: "DVR PORTARIA", total_unidades: 16 },
         { id_item: "item_02_03", descricao: "DVR AVANÇADO", total_unidades: 10 },
         { id_item: "item_02_04", descricao: "DVR COZINHA", total_unidades: 3 },
-        { id_item: "item_02_05", descricao: "NVD AREA CENTRAL", total_unidades: 14 },
+        { id_item: "item_02_05", descricao: "NVD AREA CENTRAL", total_unidades: 15 },
         { id_item: "item_02_06", descricao: "NVD LADO DIREITO", total_unidades: 16 },
         { id_item: "item_02_07", descricao: "NVD LADO ESQUERDO", total_unidades: 13 },
         { id_item: "item_02_12", descricao: "CANCELAS E PORTÕES", total_unidades: 4 },
