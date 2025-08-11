@@ -97,7 +97,7 @@ const condominios = [
     ]},
   { 
     id: "condo_05", nome: "BOUGAINVILLE", 
-    acessos: [{ descricao: "TeamViewer ID", tipo: "teamviewer", valor: "678956493" }], 
+    acessos: [{ descricao: "TeamViewer ID", tipo: "teamviewer", valor: "678956493" }, { descricao: "NVD 252", tipo: "rdp", valor: "M0MH05001380K"}, { descricao: "NVD 254", tipo: "rdp", valor: "M0MH0500254VK"}, { descricao: "NVD 232", tipo: "rdp", valor: "6LKL1100334AV"}], 
     itens_checklist: [
         { id_item: "item_05_01", descricao: "NVD 223", total_unidades: 5 },
         { id_item: "item_05_02", descricao: "NVD 252", total_unidades: 31 },
