@@ -80,7 +80,7 @@ const condominios = [
     acessos: [{ descricao: "AnyDesk ID", tipo: "anydesk", valor: "102374483" }], 
     itens_checklist: [
         { id_item: "item_03_01", descricao: "DVR PORTARIA P3", total_unidades: 15 },
-        { id_item: "item_03_02", descricao: "NVD PERÍMETRO", total_unidades: 11 },
+        { id_item: "item_03_02", descricao: "NVD PERÍMETRO", total_unidades: 15 },
         { id_item: "item_03_03", descricao: "NVD P3+ SPEED", total_unidades: 16 },
         { id_item: "item_03_04", descricao: "CONTROLADOR DE ACESSO", total_unidades: 7 }, // ATUALIZADO
         { id_item: "item_03_05", descricao: "CANCELAS", total_unidades: 2 }
