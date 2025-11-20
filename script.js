@@ -10,7 +10,7 @@ let lastFetchedTime = null;
 function formatDateTime(dateObj) { 
     if (!dateObj || !(dateObj instanceof Date)) { return "Data inválida"; }
     const day = String(dateObj.getDate()).padStart(2, '0');
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); 
     const year = dateObj.getFullYear();
     const hours = String(dateObj.getHours()).padStart(2, '0');
     const minutes = String(dateObj.getMinutes()).padStart(2, '0');
@@ -47,14 +47,14 @@ fetchTimeFromAPI().then(() => {});
 setInterval(fetchTimeFromAPI, 10 * 60 * 1000); 
 
 // --- Dados da Aplicação ---
-const verificadores = ["Filipe", "Gustavo", "Josemar", "Rafael"];
+const verificadores = ["Filipe", "Gustavo", "Josemar", "Rafael"]; // Lista de plantonistas confirmada
 
-const condominios = [
+const condominios = [ 
   { 
     id: "condo_01", nome: "PENÍNSULA", 
     acessos: [{ descricao: "Acesso Principal", tipo: "rdp", valor: "Peninsula.Dyndns.org" }], 
     itens_checklist: [
-        { id_item: "item_01_01", descricao: "CFTV", total_unidades: 97 }, // ATUALIZADO (97)
+        { id_item: "item_01_01", descricao: "CFTV", total_unidades: 94 },
         { id_item: "item_01_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 9 },
         { id_item: "item_01_03", descricao: "STATUS GERAL DOS PORTÕES", total_unidades: 8 },
         { id_item: "item_01_04", descricao: "CERCA ELÉTRICA", total_unidades: 6 },
@@ -80,20 +80,19 @@ const condominios = [
     acessos: [{ descricao: "AnyDesk ID", tipo: "anydesk", valor: "102374483" }], 
     itens_checklist: [
         { id_item: "item_03_01", descricao: "DVR PORTARIA P3", total_unidades: 15 },
-        { id_item: "item_03_02", descricao: "NVD PERÍMETRO", total_unidades: 5 }, // ATUALIZADO (5)
+        { id_item: "item_03_02", descricao: "NVD PERÍMETRO", total_unidades: 11 },
         { id_item: "item_03_03", descricao: "NVD P3+ SPEED", total_unidades: 16 },
         { id_item: "item_03_04", descricao: "CONTROLADOR DE ACESSO", total_unidades: 7 },
-        { id_item: "item_03_05", descricao: "CANCELAS", total_unidades: 2 },
-        { id_item: "item_03_06", descricao: "CÂMERAS TÉRMICAS", total_unidades: 35 } // NOVO ITEM
+        { id_item: "item_03_05", descricao: "CANCELAS", total_unidades: 2 }
     ]},
   { 
     id: "condo_04", nome: "CDM ABC JF", 
     acessos: [{ descricao: "AnyDesk ID", tipo: "anydesk", valor: "909537479" }], 
     itens_checklist: [
         { id_item: "item_04_01", descricao: "CFTV", total_unidades: 254 },
-        { id_item: "item_04_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 3 }, // ATUALIZADO (3)
+        { id_item: "item_04_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 2 },
         { id_item: "item_04_03", descricao: "CANCELAS", total_unidades: 3 },
-        { id_item: "item_04_04", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 8 } // ATUALIZADO (8)
+        { id_item: "item_04_04", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 6 }
     ]},
   { 
     id: "condo_05", nome: "BOUGAINVILLE", 
@@ -111,7 +110,11 @@ const condominios = [
     ]},
   { 
     id: "condo_07", nome: "EPAMIG SEDE BH", 
-    acessos: [ { descricao: "CIP 850", tipo: "link", valor: "http://201.17.134.15/" }, { descricao: "Situator", tipo: "link", valor: "http://177.69.38.5:10002/app/login" }, { descricao: "D-guard", tipo: "link", valor: "http://177.69.38.5:10000/#!/login" } ], 
+    acessos: [ 
+        { descricao: "CIP 850", tipo: "link", valor: "http://181.233.184.64:19103/" }, // LINK ATUALIZADO
+        { descricao: "Situator", tipo: "link", valor: "http://177.69.38.5:10002/app/login" }, 
+        { descricao: "D-guard", tipo: "link", valor: "http://177.69.38.5:10000/#!/login" } 
+    ], 
     itens_checklist: [
         { id_item: "item_07_01", descricao: "CFTV", total_unidades: 24 },
         { id_item: "item_07_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 6 },
@@ -132,14 +135,14 @@ const condominios = [
     acessos: [ { descricao: "NVD 1", tipo: "link", valor: "http://177.69.91.189:10001/" }, { descricao: "XPE 3101", tipo: "link", valor: "http://177.69.91.189:10007/fcgi/do?id=1" } ], 
     itens_checklist: [
         { id_item: "item_09_01", descricao: "CFTV", total_unidades: 22 },
-        { id_item: "item_09_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 1 } // ATUALIZADO (1)
+        { id_item: "item_09_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 2 } 
     ]},
   { 
     id: "condo_10", nome: "EPAMIG PATROCÍNIO", 
     acessos: [ { descricao: "NVD 1", tipo: "link", valor: "http://177.85.2.154:10003/" }, { descricao: "XPE 3101", tipo: "link", valor: "http://177.85.2.154:7503/fcgi/do?id=1" } ], 
     itens_checklist: [
         { id_item: "item_10_01", descricao: "CFTV", total_unidades: 14 },
-        { id_item: "item_10_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 1 } // ATUALIZADO (1)
+        { id_item: "item_10_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 2 }
     ]},
   { 
     id: "condo_11", nome: "EPAMIG PATOS DE MINAS", 
@@ -172,9 +175,9 @@ const condominios = [
     id: "condo_14", nome: "VALE DO OURO", 
     acessos: [ { descricao: "DVR 1", tipo: "link", valor: "http://179.106.100.102:10002/" }, { descricao: "DVR 2", tipo: "link", valor: "http://179.106.100.102:10005/" }, { descricao: "DVR 3", tipo: "link", valor: "http://179.106.100.102:10008/" }, { descricao: "DVR 4", tipo: "link", valor: "http://179.106.100.102:10011/" } ], 
     itens_checklist: [
-        { id_item: "item_14_01", descricao: "NVD 01", total_unidades: 24 }, // ATUALIZADO (24)
-        { id_item: "item_14_02", descricao: "NVD 02", total_unidades: 22 }, // ATUALIZADO (22)
-        { id_item: "item_14_03", descricao: "NVD 03", total_unidades: 20 }, // ATUALIZADO (20)
+        { id_item: "item_14_01", descricao: "NVD 01", total_unidades: 20 },
+        { id_item: "item_14_02", descricao: "NVD 02", total_unidades: 23 },
+        { id_item: "item_14_03", descricao: "NVD 03", total_unidades: 21 },
         { id_item: "item_14_04", descricao: "NVD 04", total_unidades: 14 },
         { id_item: "item_14_05", descricao: "VÍDEO PORTEIRO", total_unidades: 3 }
     ]},
@@ -189,13 +192,7 @@ const condominios = [
   { 
     id: "condo_16", nome: "QUINTAS DE CASA BRANCA", 
     acessos: [ { descricao: "AnyDesk (Alternativa)", tipo: "anydesk", valor: "1684437935" }, { descricao: "DVR 1 (Externo)", tipo: "link", valor: "wrqcb.dyndns.org:1003" },  { descricao: "DVR 1 (Interno)", tipo: "info_copiar", valor: "192.168.1.10" }, { descricao: "DVR 2 (Externo)", tipo: "link", valor: "wrqcb.dyndns.org:1103" },  { descricao: "DVR 2 (Interno)", tipo: "info_copiar", valor: "192.168.1.11" } ], 
-    itens_checklist: [ 
-        { id_item: "item_16_01", descricao: "CFTV", total_unidades: 47 },
-        { id_item: "item_16_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 10 },
-        { id_item: "item_16_03", descricao: "CANCELA", total_unidades: 3 },
-        { id_item: "item_16_04", descricao: "VÍDEO PORTEIRO", total_unidades: 4 },
-        { id_item: "item_16_05", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 2 }
-    ]}
+    itens_checklist: [ { id_item: "item_16_01", descricao: "CFTV", total_unidades: 47 },{ id_item: "item_16_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 10 },{ id_item: "item_16_03", descricao: "CANCELA", total_unidades: 3 },{ id_item: "item_16_04", descricao: "VÍDEO PORTEIRO", total_unidades: 4 },{ id_item: "item_16_05", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 2 }]}
 ];
 
 // --- Lógica Principal da Aplicação ---
@@ -315,10 +312,8 @@ document.addEventListener('DOMContentLoaded', () => {
                  atualizarEstadoBotoesEInterface();
             }
         });
-    } else {
-        console.error("Elemento select 'plantonista' não encontrado no DOM.");
     }
-
+    
     function popularCondominiosDropdown(idCondominioParaSelecionar = null) {
         if (!condominioSelect) { return; }
         const valorSelecionadoAnteriormente = idCondominioParaSelecionar || condominioSelect.value;
@@ -525,9 +520,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (editandoRegistroIndex === null && !condominioIdSelecionado) { showToast("Por favor, selecione um Condomínio.", "error"); if(condominioSelect) condominioSelect.focus(); return; }
             if (!validarChecklistAtual()) { showToast("Preencha campos obrigatórios. Observação é necessária para itens com defeito.", "error"); return; }
             
-            const dataHoraRegistro = new Date(); // Pega o horário atual do clique
+            const dataHoraRegistro = new Date(); // SEMPRE pega a hora atual para o registro/edição
             const condominioObj = condominios.find(c => c.id === condominioIdSelecionado);
             if (!condominioObj) { showToast("Erro: Condomínio não encontrado.", "error"); return; }
+            
             const resultadosChecklist = []; const itensDoDOM = checklistContainer.querySelectorAll('.checklist-item');
             itensDoDOM.forEach(itemDiv => { const itemId = itemDiv.dataset.itemId; const itemOriginal = condominioObj.itens_checklist.find(i => i.id_item === itemId); resultadosChecklist.push({ id_item_original: itemId, descricao: itemOriginal ? itemOriginal.descricao : 'N/A', total_unidades: itemOriginal ? itemOriginal.total_unidades : 0, funcionando: parseInt(itemDiv.querySelector(`input[id^="item_func_"]`).value) || 0, com_defeito: parseInt(itemDiv.querySelector(`input[id^="item_def_"]`).value) || 0, observacao: itemDiv.querySelector(`textarea[id^="item_obs_"]`).value.trim() }); });
             
@@ -535,8 +531,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 plantonista: plantonistaSelecionado, 
                 condominio_id: condominioObj.id, 
                 condominio_nome: condominioObj.nome, 
-                data_hora_verificacao: formatDateTime(dataHoraRegistro), 
-                timestamp_verificacao_iso: dataHoraRegistro.toISOString(), 
+                data_hora_verificacao: formatDateTime(dataHoraRegistro), // Usa a dataHoraRegistro atual
+                timestamp_verificacao_iso: dataHoraRegistro.toISOString(), // Usa a dataHoraRegistro atual
                 checklist_resultados: resultadosChecklist 
             };
 
