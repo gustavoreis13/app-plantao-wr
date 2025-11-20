@@ -10,7 +10,7 @@ let lastFetchedTime = null;
 function formatDateTime(dateObj) { 
     if (!dateObj || !(dateObj instanceof Date)) { return "Data inválida"; }
     const day = String(dateObj.getDate()).padStart(2, '0');
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0'); 
+    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
     const year = dateObj.getFullYear();
     const hours = String(dateObj.getHours()).padStart(2, '0');
     const minutes = String(dateObj.getMinutes()).padStart(2, '0');
@@ -47,15 +47,15 @@ fetchTimeFromAPI().then(() => {});
 setInterval(fetchTimeFromAPI, 10 * 60 * 1000); 
 
 // --- Dados da Aplicação ---
-const verificadores = ["Filipe", "Gustavo", "Josemar", "Rafael", "Hiago"];
+const verificadores = ["Filipe", "Gustavo", "Josemar", "Rafael"];
 
-const condominios = [ 
+const condominios = [
   { 
     id: "condo_01", nome: "PENÍNSULA", 
-    acessos: [{ descricao: "Acesso Principal", tipo: "rdp", valor: "Peninsula.Dyndns.org" }, { descricao: "AnyDesk SRV Controle de Acesso", tipo: "anydesk", valor: "626560922"}, {descricao: "Anydesk SRV de CFTV", tipo: "anydesk", valor: "1643237138"}], 
+    acessos: [{ descricao: "Acesso Principal", tipo: "rdp", valor: "Peninsula.Dyndns.org" }], 
     itens_checklist: [
-        { id_item: "item_01_01", descricao: "CFTV", total_unidades: 94 },
-        { id_item: "item_01_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 9 }, // ATUALIZADO
+        { id_item: "item_01_01", descricao: "CFTV", total_unidades: 97 }, // ATUALIZADO (97)
+        { id_item: "item_01_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 9 },
         { id_item: "item_01_03", descricao: "STATUS GERAL DOS PORTÕES", total_unidades: 8 },
         { id_item: "item_01_04", descricao: "CERCA ELÉTRICA", total_unidades: 6 },
         { id_item: "item_01_05", descricao: "DISPOSITIVOS I/O", total_unidades: 3 }
@@ -68,7 +68,7 @@ const condominios = [
         { id_item: "item_02_02", descricao: "DVR PORTARIA", total_unidades: 16 },
         { id_item: "item_02_03", descricao: "DVR AVANÇADO", total_unidades: 10 },
         { id_item: "item_02_04", descricao: "DVR COZINHA", total_unidades: 3 },
-        { id_item: "item_02_05", descricao: "NVD AREA CENTRAL", total_unidades: 15 },
+        { id_item: "item_02_05", descricao: "NVD AREA CENTRAL", total_unidades: 14 },
         { id_item: "item_02_06", descricao: "NVD LADO DIREITO", total_unidades: 16 },
         { id_item: "item_02_07", descricao: "NVD LADO ESQUERDO", total_unidades: 13 },
         { id_item: "item_02_12", descricao: "CANCELAS E PORTÕES", total_unidades: 4 },
@@ -80,24 +80,24 @@ const condominios = [
     acessos: [{ descricao: "AnyDesk ID", tipo: "anydesk", valor: "102374483" }], 
     itens_checklist: [
         { id_item: "item_03_01", descricao: "DVR PORTARIA P3", total_unidades: 15 },
-        { id_item: "item_03_02", descricao: "NVD PERÍMETRO", total_unidades: 15 }, // ATUALIZADO
+        { id_item: "item_03_02", descricao: "NVD PERÍMETRO", total_unidades: 5 }, // ATUALIZADO (5)
         { id_item: "item_03_03", descricao: "NVD P3+ SPEED", total_unidades: 16 },
-        { id_item: "item_03_04", descricao: "CONTROLADOR DE ACESSO", total_unidades: 7 }, // ATUALIZADO
-        { id_item: "item_03_05", descricao: "CANCELAS", total_unidades: 2 }
+        { id_item: "item_03_04", descricao: "CONTROLADOR DE ACESSO", total_unidades: 7 },
+        { id_item: "item_03_05", descricao: "CANCELAS", total_unidades: 2 },
+        { id_item: "item_03_06", descricao: "CÂMERAS TÉRMICAS", total_unidades: 35 } // NOVO ITEM
     ]},
   { 
     id: "condo_04", nome: "CDM ABC JF", 
     acessos: [{ descricao: "AnyDesk ID", tipo: "anydesk", valor: "909537479" }], 
     itens_checklist: [
         { id_item: "item_04_01", descricao: "CFTV", total_unidades: 254 },
-        { id_item: "item_04_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 3 }, // ATUALIZADO
+        { id_item: "item_04_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 3 }, // ATUALIZADO (3)
         { id_item: "item_04_03", descricao: "CANCELAS", total_unidades: 3 },
-        { id_item: "item_04_04", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 8 },
-        { id_item: "item_04_05", descricao: "DVR'S BACKUP", total_unidades: 8 }
+        { id_item: "item_04_04", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 8 } // ATUALIZADO (8)
     ]},
   { 
     id: "condo_05", nome: "BOUGAINVILLE", 
-    acessos: [{ descricao: "TeamViewer ID", tipo: "teamviewer", valor: "678956493" }, { descricao: "NVD 252", tipo: "rdp", valor: "M0MH05001380K"}, { descricao: "NVD 254", tipo: "rdp", valor: "M0MH0500254VK"}, { descricao: "NVD 232", tipo: "rdp", valor: "6LKL1100334AV"}], 
+    acessos: [{ descricao: "TeamViewer ID", tipo: "teamviewer", valor: "678956493" }], 
     itens_checklist: [
         { id_item: "item_05_01", descricao: "NVD 223", total_unidades: 5 },
         { id_item: "item_05_02", descricao: "NVD 252", total_unidades: 31 },
@@ -114,7 +114,7 @@ const condominios = [
     acessos: [ { descricao: "CIP 850", tipo: "link", valor: "http://201.17.134.15/" }, { descricao: "Situator", tipo: "link", valor: "http://177.69.38.5:10002/app/login" }, { descricao: "D-guard", tipo: "link", valor: "http://177.69.38.5:10000/#!/login" } ], 
     itens_checklist: [
         { id_item: "item_07_01", descricao: "CFTV", total_unidades: 24 },
-        { id_item: "item_07_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 6 }, // ATUALIZADO
+        { id_item: "item_07_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 6 },
         { id_item: "item_07_03", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 4 },
         { id_item: "item_07_04", descricao: "ATENDEDOR", total_unidades: 3 },
         { id_item: "item_07_05", descricao: "SITUATOR", total_unidades: 1 }
@@ -124,7 +124,7 @@ const condominios = [
     acessos: [ { descricao: "NVD 1", tipo: "link", valor: "http://177.129.185.181:10005/" }, { descricao: "XPE 3200 FACE (1)", tipo: "link", valor: "http://177.129.185.181:10007/fcgi/do?id=1" }, { descricao: "XPE 3200 FACE (2)", tipo: "link", valor: "http://177.129.185.181:10008/fcgi/do?id=1" }, { descricao: "TVIP 3000", tipo: "link", valor: "http://177.129.185.181:10012/fcgi/do?id=1" } ], 
     itens_checklist: [
         { id_item: "item_08_01", descricao: "CFTV", total_unidades: 16 },
-        { id_item: "item_08_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 2 }, // ATUALIZADO
+        { id_item: "item_08_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 2 },
         { id_item: "item_08_03", descricao: "CANCELA", total_unidades: 1 }
     ]},
   { 
@@ -132,14 +132,14 @@ const condominios = [
     acessos: [ { descricao: "NVD 1", tipo: "link", valor: "http://177.69.91.189:10001/" }, { descricao: "XPE 3101", tipo: "link", valor: "http://177.69.91.189:10007/fcgi/do?id=1" } ], 
     itens_checklist: [
         { id_item: "item_09_01", descricao: "CFTV", total_unidades: 22 },
-        { id_item: "item_09_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 1 } // ATUALIZADO
+        { id_item: "item_09_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 1 } // ATUALIZADO (1)
     ]},
   { 
     id: "condo_10", nome: "EPAMIG PATROCÍNIO", 
     acessos: [ { descricao: "NVD 1", tipo: "link", valor: "http://177.85.2.154:10003/" }, { descricao: "XPE 3101", tipo: "link", valor: "http://177.85.2.154:7503/fcgi/do?id=1" } ], 
     itens_checklist: [
         { id_item: "item_10_01", descricao: "CFTV", total_unidades: 14 },
-        { id_item: "item_10_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 1 } // ATUALIZADO
+        { id_item: "item_10_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 1 } // ATUALIZADO (1)
     ]},
   { 
     id: "condo_11", nome: "EPAMIG PATOS DE MINAS", 
@@ -161,7 +161,7 @@ const condominios = [
     id: "condo_13", nome: "EPAMIG PITANGUI ITAP", 
     acessos: [ { descricao: "NVD 1", tipo: "link", valor: "http://179.109.160.11:10003/" }, { descricao: "NVD 2", tipo: "link", valor: "http://179.109.160.11:10006/" }, { descricao: "NVD 3", tipo: "link", valor: "http://179.109.160.11:10009/" }, { descricao: "Situator", tipo: "link", valor: "http://179.109.160.11:10000/app/login" } ], 
     itens_checklist: [
-        { id_item: "item_13_01", descricao: "CONTROLADOR DE ACESSO", total_unidades: 4 }, // ATUALIZADO
+        { id_item: "item_13_01", descricao: "CONTROLADOR DE ACESSO", total_unidades: 4 },
         { id_item: "item_13_02", descricao: "NVD 01", total_unidades: 29 },
         { id_item: "item_13_03", descricao: "NVD 02", total_unidades: 31 },
         { id_item: "item_13_04", descricao: "NVD 03", total_unidades: 15 },
@@ -172,26 +172,26 @@ const condominios = [
     id: "condo_14", nome: "VALE DO OURO", 
     acessos: [ { descricao: "DVR 1", tipo: "link", valor: "http://179.106.100.102:10002/" }, { descricao: "DVR 2", tipo: "link", valor: "http://179.106.100.102:10005/" }, { descricao: "DVR 3", tipo: "link", valor: "http://179.106.100.102:10008/" }, { descricao: "DVR 4", tipo: "link", valor: "http://179.106.100.102:10011/" } ], 
     itens_checklist: [
-        { id_item: "item_14_01", descricao: "NVD 01", total_unidades: 20 },
-        { id_item: "item_14_02", descricao: "NVD 02", total_unidades: 23 },
-        { id_item: "item_14_03", descricao: "NVD 03", total_unidades: 21 },
+        { id_item: "item_14_01", descricao: "NVD 01", total_unidades: 24 }, // ATUALIZADO (24)
+        { id_item: "item_14_02", descricao: "NVD 02", total_unidades: 22 }, // ATUALIZADO (22)
+        { id_item: "item_14_03", descricao: "NVD 03", total_unidades: 20 }, // ATUALIZADO (20)
         { id_item: "item_14_04", descricao: "NVD 04", total_unidades: 14 },
-        { id_item: "item_14_05", descricao: "VÍDEO PORTEIRO", total_unidades: 4 }
+        { id_item: "item_14_05", descricao: "VÍDEO PORTEIRO", total_unidades: 3 }
     ]},
   { 
     id: "condo_15", nome: "ECO CASA BRANCA", 
-    acessos: [ { descricao: "SIMNEXT NVD 1", tipo: "simnext_id", valor: "G05I4200024DJ" }, { descricao: "SIMNEXT NVD 2", tipo: "simnext_id", valor: "G05G2700119GN" }, { descricao: "SIMNEXT DVR 1", tipo: "simnext_id", valor: "8J9L0400122P5" } ], 
+    acessos: [ { descricao: "SIMNEXT NVD 1", tipo: "simnext_id", valor: "G05G2700119GN" }, { descricao: "SIMNEXT NVD 2", tipo: "simnext_id", valor: "G05I4200024DJ" }, { descricao: "SIMNEXT DVR 1", tipo: "simnext_id", valor: "8J9L0400122P5" } ], 
     itens_checklist: [
-        { id_item: "item_15_01", descricao: "NVD 01", total_unidades: 24 },
+        { id_item: "item_15_01", descricao: "NVD 01", total_unidades: 22 },
         { id_item: "item_15_02", descricao: "NVD 02", total_unidades: 24 },
-        { id_item: "item_15_03", descricao: "DVR CLUBE", total_unidades: 23 }
+        { id_item: "item_15_03", descricao: "DVR CLUBE", total_unidades: 22 }
     ]},
   { 
     id: "condo_16", nome: "QUINTAS DE CASA BRANCA", 
     acessos: [ { descricao: "AnyDesk (Alternativa)", tipo: "anydesk", valor: "1684437935" }, { descricao: "DVR 1 (Externo)", tipo: "link", valor: "wrqcb.dyndns.org:1003" },  { descricao: "DVR 1 (Interno)", tipo: "info_copiar", valor: "192.168.1.10" }, { descricao: "DVR 2 (Externo)", tipo: "link", valor: "wrqcb.dyndns.org:1103" },  { descricao: "DVR 2 (Interno)", tipo: "info_copiar", valor: "192.168.1.11" } ], 
     itens_checklist: [ 
-        { id_item: "item_16_01", descricao: "CFTV", total_unidades: 48 },
-        { id_item: "item_16_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 10 }, // ATUALIZADO
+        { id_item: "item_16_01", descricao: "CFTV", total_unidades: 47 },
+        { id_item: "item_16_02", descricao: "CONTROLADOR DE ACESSO", total_unidades: 10 },
         { id_item: "item_16_03", descricao: "CANCELA", total_unidades: 3 },
         { id_item: "item_16_04", descricao: "VÍDEO PORTEIRO", total_unidades: 4 },
         { id_item: "item_16_05", descricao: "COMPUTADORES (SRV, MONITORAMENTO E C.A)", total_unidades: 2 }
@@ -201,9 +201,6 @@ const condominios = [
 // --- Lógica Principal da Aplicação ---
 document.addEventListener('DOMContentLoaded', () => {
     // --- Referências aos Elementos DOM ---
-    // ... (todo o restante do código JavaScript permanece O MESMO da nossa última versão - Turno #33) ...
-    // Não vou repetir todo o restante aqui para economizar espaço, mas ele deve ser mantido.
-    // A única alteração é no array `condominios` acima.
     const currentYearSpan = document.getElementById('current-year');
     if (currentYearSpan) { currentYearSpan.textContent = new Date().getFullYear(); }
 
@@ -279,9 +276,9 @@ document.addEventListener('DOMContentLoaded', () => {
             btnAcaoPrincipal.classList.remove('hidden');
             btnRevisarRegistros.textContent = 'Revisar Registros';
             btnRevisarRegistros.classList.remove('hidden'); 
-            btnFinalizarSessao.classList.add('hidden'); 
             btnFinalizarSessao.disabled = true; 
             btnFinalizarSessao.classList.remove('finalizar-ativo'); 
+            btnFinalizarSessao.classList.remove('hidden'); 
             areaEntradaDados.classList.remove('hidden');
             areaRevisao.classList.add('hidden');
         }
@@ -318,8 +315,10 @@ document.addEventListener('DOMContentLoaded', () => {
                  atualizarEstadoBotoesEInterface();
             }
         });
+    } else {
+        console.error("Elemento select 'plantonista' não encontrado no DOM.");
     }
-    
+
     function popularCondominiosDropdown(idCondominioParaSelecionar = null) {
         if (!condominioSelect) { return; }
         const valorSelecionadoAnteriormente = idCondominioParaSelecionar || condominioSelect.value;
@@ -525,13 +524,34 @@ document.addEventListener('DOMContentLoaded', () => {
             const plantonistaSelecionado = plantonistaSelect ? plantonistaSelect.value : ''; const condominioIdSelecionado = (editandoRegistroIndex !== null) ? registrosDaSessao[editandoRegistroIndex].condominio_id : (condominioSelect ? condominioSelect.value : '');
             if (editandoRegistroIndex === null && !condominioIdSelecionado) { showToast("Por favor, selecione um Condomínio.", "error"); if(condominioSelect) condominioSelect.focus(); return; }
             if (!validarChecklistAtual()) { showToast("Preencha campos obrigatórios. Observação é necessária para itens com defeito.", "error"); return; }
-            const dataHoraRegistro = new Date(); const condominioObj = condominios.find(c => c.id === condominioIdSelecionado);
+            
+            const dataHoraRegistro = new Date(); // Pega o horário atual do clique
+            const condominioObj = condominios.find(c => c.id === condominioIdSelecionado);
             if (!condominioObj) { showToast("Erro: Condomínio não encontrado.", "error"); return; }
             const resultadosChecklist = []; const itensDoDOM = checklistContainer.querySelectorAll('.checklist-item');
             itensDoDOM.forEach(itemDiv => { const itemId = itemDiv.dataset.itemId; const itemOriginal = condominioObj.itens_checklist.find(i => i.id_item === itemId); resultadosChecklist.push({ id_item_original: itemId, descricao: itemOriginal ? itemOriginal.descricao : 'N/A', total_unidades: itemOriginal ? itemOriginal.total_unidades : 0, funcionando: parseInt(itemDiv.querySelector(`input[id^="item_func_"]`).value) || 0, com_defeito: parseInt(itemDiv.querySelector(`input[id^="item_def_"]`).value) || 0, observacao: itemDiv.querySelector(`textarea[id^="item_obs_"]`).value.trim() }); });
-            const registroProcessado = { plantonista: plantonistaSelecionado, condominio_id: condominioObj.id, condominio_nome: condominioObj.nome, data_hora_verificacao: formatDateTime(dataHoraRegistro), timestamp_verificacao_iso: dataHoraRegistro.toISOString(), checklist_resultados: resultadosChecklist };
-            if (editandoRegistroIndex !== null) { registrosDaSessao[editandoRegistroIndex] = registroProcessado; showToast(`Alterações em "${condominioObj.nome}" salvas!`, 'success'); editandoRegistroIndex = null; revisaoIniciada = true; renderReviewPage(); } 
-            else { registrosDaSessao.push(registroProcessado); showToast(`"${condominioObj.nome}" adicionado. ${registrosDaSessao.length} registro(s).`, 'success'); popularCondominiosDropdown(); if(condominioSelect) condominioSelect.value = ''; renderChecklist(null); if(condominioLinkWrapper) condominioLinkWrapper.classList.add('hidden'); }
+            
+            const registroProcessado = { 
+                plantonista: plantonistaSelecionado, 
+                condominio_id: condominioObj.id, 
+                condominio_nome: condominioObj.nome, 
+                data_hora_verificacao: formatDateTime(dataHoraRegistro), 
+                timestamp_verificacao_iso: dataHoraRegistro.toISOString(), 
+                checklist_resultados: resultadosChecklist 
+            };
+
+            if (editandoRegistroIndex !== null) { 
+                registrosDaSessao[editandoRegistroIndex] = registroProcessado; 
+                showToast(`Alterações em "${condominioObj.nome}" salvas!`, 'success'); 
+                editandoRegistroIndex = null; revisaoIniciada = true; renderReviewPage(); 
+            } else { 
+                registrosDaSessao.push(registroProcessado); 
+                showToast(`"${condominioObj.nome}" adicionado. ${registrosDaSessao.length} registro(s).`, 'success'); 
+                popularCondominiosDropdown(); 
+                if(condominioSelect) condominioSelect.value = ''; 
+                renderChecklist(null); 
+                if(condominioLinkWrapper) condominioLinkWrapper.classList.add('hidden'); 
+            }
             atualizarEstadoBotoesEInterface();
         });
     }
